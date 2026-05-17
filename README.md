@@ -243,3 +243,4 @@ cd backend && npx prisma studio
 
 Built with ❤️ for the PEBLO Full Stack Developer Challenge
 # peblo
+# Smart-Leads-Dashboard
