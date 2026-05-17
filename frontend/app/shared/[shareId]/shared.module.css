@@ -7,7 +7,7 @@
 .shareNav {
   padding: var(--space-md) var(--space-lg);
   border-bottom: 1px solid var(--border-primary);
-  background: rgba(6, 8, 15, 0.7);
+  background: var(--bg-header);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }

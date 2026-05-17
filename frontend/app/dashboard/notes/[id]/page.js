@@ -21,7 +21,8 @@ import {
   Globe,
   Pen,
   Eye,
-  LinkIcon
+  LinkIcon,
+  FileText
 } from 'lucide-react';
 import styles from './editor.module.css';
 
