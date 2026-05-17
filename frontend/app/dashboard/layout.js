@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import useAuthStore from '@/store/authStore';
+import { FileText, TrendingUp, LogOut, Sun, Moon, Menu } from 'lucide-react';
 import { getInitials } from '@/lib/utils';
 import styles from './dashboard.module.css';
 
@@ -71,8 +72,8 @@ export default function DashboardLayout({ children }) {
   }
 
   const navLinks = [
-    { href: '/dashboard', icon: '📝', label: 'Notes' },
-    { href: '/dashboard/insights', icon: '📊', label: 'Insights' },
+    { href: '/dashboard', icon: FileText, label: 'Notes' },
+    { href: '/dashboard/insights', icon: TrendingUp, label: 'Insights' },
   ];
 
   const getTitle = () => {
@@ -108,22 +109,29 @@ export default function DashboardLayout({ children }) {
         </div>
 
         <nav className={styles.sidebarNav}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`${styles.sidebarLink} ${pathname === link.href ? styles.sidebarLinkActive : ''}`}
-              onClick={() => setMobileOpen(false)}
-            >
-              <span className={styles.sidebarLinkIcon}>{link.icon}</span>
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`${styles.sidebarLink} ${pathname === link.href ? styles.sidebarLinkActive : ''}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                <span className={styles.sidebarLinkIcon}>
+                  <Icon size={18} />
+                </span>
+                {link.label}
+              </Link>
+            );
+          })}
 
           <div className={styles.sidebarDivider} />
 
           <button className={styles.sidebarLink} onClick={handleLogout}>
-            <span className={styles.sidebarLinkIcon}>🚪</span>
+            <span className={styles.sidebarLinkIcon}>
+              <LogOut size={18} />
+            </span>
             Sign Out
           </button>
         </nav>
@@ -149,13 +157,13 @@ export default function DashboardLayout({ children }) {
               className={styles.mobileMenuBtn}
               onClick={() => setMobileOpen(!mobileOpen)}
             >
-              ☰
+              <Menu size={20} />
             </button>
             <h2 className={styles.topBarTitle}>{getTitle()}</h2>
           </div>
           <div className={styles.topBarActions}>
             <button className={styles.themeToggle} onClick={toggleTheme} title="Toggle theme">
-              {theme === 'dark' ? '☀️' : '🌙'}
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
           </div>
         </div>

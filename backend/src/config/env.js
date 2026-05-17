@@ -1,5 +1,13 @@
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// This ensures dotenv always loads the .env file located inside backend/ directory
+// regardless of where the node command was executed.
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const env = {
   PORT: process.env.PORT || 5001,

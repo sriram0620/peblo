@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import useNotesStore from '@/store/notesStore';
 import { formatDate, stripMarkdown, truncate, debounce } from '@/lib/utils';
 import toast from 'react-hot-toast';
+import { Search, Archive, FileText, Plus, Trash2, ArchiveRestore, Globe, X } from 'lucide-react';
 import styles from './notes.module.css';
 
 export default function DashboardPage() {
@@ -91,7 +92,9 @@ export default function DashboardPage() {
       {/* Toolbar */}
       <div className={styles.toolbar}>
         <div className={styles.searchWrapper}>
-          <span className={styles.searchIcon}>🔍</span>
+          <span className={styles.searchIcon}>
+            <Search size={16} />
+          </span>
           <input
             id="notes-search"
             type="text"
@@ -107,11 +110,18 @@ export default function DashboardPage() {
           <button
             className={`btn btn-sm ${showArchived ? 'btn-secondary' : 'btn-ghost'}`}
             onClick={() => setShowArchived(!showArchived)}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
           >
-            {showArchived ? '📦 Archived' : '📋 Active'}
+            {showArchived ? <Archive size={14} /> : <FileText size={14} />}
+            {showArchived ? 'Archived' : 'Active'}
           </button>
-          <button className="btn btn-primary btn-sm" onClick={handleNewNote}>
-            ✏️ New Note
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={handleNewNote}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            <Plus size={14} />
+            New Note
           </button>
         </div>
       </div>
@@ -133,9 +143,9 @@ export default function DashboardPage() {
             <button
               className={styles.tagChip}
               onClick={() => setSelectedTags([])}
-              style={{ color: 'var(--status-error)' }}
+              style={{ color: 'var(--status-error)', display: 'flex', alignItems: 'center', gap: '4px' }}
             >
-              ✕ Clear
+              <X size={12} /> Clear
             </button>
           )}
         </div>
@@ -154,7 +164,9 @@ export default function DashboardPage() {
         </div>
       ) : notes.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-state-icon">{showArchived ? '📦' : '📝'}</div>
+          <div className="empty-state-icon">
+            {showArchived ? <Archive size={40} /> : <FileText size={40} />}
+          </div>
           <h3 className="empty-state-title">
             {showArchived ? 'No archived notes' : searchQuery ? 'No notes found' : 'No notes yet'}
           </h3>
@@ -166,8 +178,12 @@ export default function DashboardPage() {
                 : 'Create your first note to get started'}
           </p>
           {!showArchived && !searchQuery && (
-            <button className="btn btn-primary" style={{ marginTop: 'var(--space-md)' }} onClick={handleNewNote}>
-              ✏️ Create Note
+            <button
+              className="btn btn-primary"
+              style={{ marginTop: 'var(--space-md)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+              onClick={handleNewNote}
+            >
+              <Plus size={16} /> Create Note
             </button>
           )}
         </div>
@@ -190,14 +206,14 @@ export default function DashboardPage() {
                     onClick={(e) => handleArchiveNote(e, note.id)}
                     title={showArchived ? 'Restore' : 'Archive'}
                   >
-                    {showArchived ? '↩️' : '📦'}
+                    {showArchived ? <ArchiveRestore size={15} /> : <Archive size={15} />}
                   </button>
                   <button
                     className={styles.noteCardAction}
                     onClick={(e) => handleDeleteNote(e, note.id)}
                     title="Delete"
                   >
-                    🗑️
+                    <Trash2 size={15} />
                   </button>
                 </div>
               </div>
@@ -218,7 +234,11 @@ export default function DashboardPage() {
                   )}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
-                  {note.isPublic && <span className={styles.noteCardShared}>🔗</span>}
+                  {note.isPublic && (
+                    <span className={styles.noteCardShared} title="Publicly Shared">
+                      <Globe size={14} />
+                    </span>
+                  )}
                   <span className={styles.noteCardDate}>{formatDate(note.updatedAt)}</span>
                 </div>
               </div>

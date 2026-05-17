@@ -206,43 +206,100 @@
   margin: 0 4px;
 }
 
-.previewToggle {
+.viewModeGroup {
   margin-left: auto;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 500;
+  display: inline-flex;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: 2px;
+  gap: 2px;
 }
 
-.previewToggleActive {
-  background: var(--gradient-subtle);
-  color: var(--accent-primary);
+.viewModeBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.viewModeBtn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.viewModeBtnActive {
+  background: var(--gradient-subtle) !important;
+  color: var(--accent-primary) !important;
+  border: 1px solid var(--border-accent);
 }
 
 /* ─── Content Area ────────────────────────────────────── */
 .contentArea {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentAreaSplit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  flex: 1;
+  min-height: 450px;
+}
+
+.editorPane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.previewPane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-left: 1px solid var(--border-primary);
+  padding-left: var(--space-xl);
+  overflow-y: auto;
+  max-height: calc(100vh - 250px);
 }
 
 .contentTextarea {
   width: 100%;
-  min-height: 400px;
+  min-height: 450px;
   height: 100%;
   background: transparent;
   border: none;
   color: var(--text-primary);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.9375rem;
   line-height: 1.8;
   outline: none;
-  resize: none;
+  overflow-y: auto;
+  padding-bottom: var(--space-3xl);
 }
 
-.contentTextarea::placeholder {
+.contentTextarea:empty::before {
+  content: attr(placeholder);
   color: var(--text-muted);
+  pointer-events: none;
+  display: block;
 }
 
 .previewContent {
-  min-height: 400px;
+  min-height: 450px;
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
 }
 
 /* ─── AI Panel (Right Sidebar) ────────────────────────── */
@@ -384,5 +441,9 @@
 
   .titleInput {
     font-size: 1.375rem;
+  }
+
+  .hideOnMobile {
+    display: none !important;
   }
 }
